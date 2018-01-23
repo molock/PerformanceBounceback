@@ -14,6 +14,13 @@ public class BallSpawner : MonoBehaviour {
     private float cooldown;
     private float cooldownLength = 0.5f;
 
+    private Rigidbody selectedRigidbody;
+
+    private GameObject selectedBall;
+
+    //private List<Rigidbody> pooledBallRigidbodyList;
+
+
     void Awake()
     {
         current = this; //makes it so the functions in ObjectPool can be accessed easily anywhere
@@ -21,13 +28,16 @@ public class BallSpawner : MonoBehaviour {
 
     void Start()
     {
-        //Create Bullet Pool
+        //Create ball Pool
         pooledBalls = new List<GameObject>();
+        //pooledBallRigidbodyList = new List<Rigidbody>();
+
         for (int i = 0; i < ballsAmount; i++)
         {
             GameObject obj = Instantiate(pooledBall);
             obj.SetActive(false);
             pooledBalls.Add(obj);
+            //pooledBallRigidbodyList.Add(obj.GetComponent<Rigidbody>());
         }
     }
 
@@ -41,13 +51,14 @@ public GameObject GetPooledBall()
     //if we’ve run out of objects in the pool too quickly, create a new one
     if (pooledBalls[ballPoolNum].activeInHierarchy)
     {
-        //create a new bullet and add it to the bulletList
+        //create a new ball and add it to the ballList
         GameObject obj = Instantiate(pooledBall);
         pooledBalls.Add(obj);
         ballsAmount++;
         ballPoolNum = ballsAmount - 1;
+        //Debug.Log("balls are not enough!!!");
     }
-        Debug.Log(ballPoolNum);
+        //Debug.Log(ballPoolNum);
         return pooledBalls[ballPoolNum];
 }
    	
@@ -63,9 +74,9 @@ public GameObject GetPooledBall()
 
     void SpawnBall()
     {
-        GameObject selectedBall = BallSpawner.current.GetPooledBall();
+        selectedBall = BallSpawner.current.GetPooledBall();
         selectedBall.transform.position = transform.position;
-        Rigidbody selectedRigidbody = selectedBall.GetComponent<Rigidbody>();
+        selectedRigidbody = selectedBall.GetComponent<Rigidbody>();
         selectedRigidbody.velocity = Vector3.zero;
         selectedRigidbody.angularVelocity = Vector3.zero;
         selectedBall.SetActive(true);
