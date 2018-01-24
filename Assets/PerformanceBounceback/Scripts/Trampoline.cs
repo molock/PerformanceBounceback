@@ -8,7 +8,7 @@ public class Trampoline : MonoBehaviour {
     public GameManager scoreScript;
 
 	// Use this for initialization
-	void Start () 
+	void Start ()
     {
 		pSystem = GetComponentInChildren<ParticleSystem>();
 	}
@@ -26,11 +26,9 @@ public class Trampoline : MonoBehaviour {
         if (col.gameObject.CompareTag("Throwable"))
         {
             //Score Point
-            scoreScript.score++;
+            scoreScript.AddScore(1);
             //Particle effect
             pSystem.Play();
-
-            //Debug.Log("Trampoline Hit");
         }
 
     }

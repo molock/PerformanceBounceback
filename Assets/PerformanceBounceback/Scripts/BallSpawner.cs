@@ -56,9 +56,7 @@ public GameObject GetPooledBall()
         pooledBalls.Add(obj);
         ballsAmount++;
         ballPoolNum = ballsAmount - 1;
-        //Debug.Log("balls are not enough!!!");
     }
-        //Debug.Log(ballPoolNum);
         return pooledBalls[ballPoolNum];
 }
    	
